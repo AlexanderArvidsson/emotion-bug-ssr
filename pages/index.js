@@ -1,5 +1,13 @@
+import React from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+
+// It seems like having a forwardRef with displayName causes the mismatch.
+const Button = React.forwardRef(({ children }, ref) => {
+  return <button css={{ background: "red" }}>{children}</button>;
+});
+
+Button.displayName = "Button";
 
 export default function Home() {
   return (
@@ -7,6 +15,8 @@ export default function Home() {
       {[1, 2, 3].map((_, i) => (
         <div key={i} css={{ background: "red" }} />
       ))}
+
+      <Button>test</Button>
 
       <Head>
         <title>Create Next App</title>
