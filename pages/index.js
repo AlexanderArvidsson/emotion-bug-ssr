@@ -2,12 +2,19 @@ import React from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
-// It seems like having a forwardRef with displayName causes the mismatch.
-const Button = React.forwardRef(({ children }, ref) => {
+// Named function, this works in both chrome and firefox when adding
+// ReactDOMServerRenderer.render to regex
+const Button = React.forwardRef(function Button({ children }, ref) {
   return <button css={{ background: "red" }}>{children}</button>;
 });
 
-Button.displayName = "Button";
+// Display name, this one does not work in firefox when adding
+// ReactDOMServerRenderer.render to regex
+const Button2 = React.forwardRef(({ children }, ref) => {
+  return <button css={{ background: "red" }}>{children}</button>;
+});
+
+Button2.displayName = "Button2";
 
 export default function Home() {
   return (
@@ -17,6 +24,7 @@ export default function Home() {
       ))}
 
       <Button>test</Button>
+      <Button2>test</Button2>
 
       <Head>
         <title>Create Next App</title>
